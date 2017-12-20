@@ -1,0 +1,25 @@
+README:
+
+Collaboration:
+
+	Collaborated with cderman on debugging.
+
+Known Bugs:
+
+	There are not any bugs in my program to the best of my knowledge.
+
+High Level Design Choices:
+
+	Use of mutexes: I used mutexes to ensure thread safety for variables,
+	structs, or any kind of data which I knew would be accessible to multiple 
+	threads at once. 
+	Use of conditions: Most important use of conditions in my program is to ensure
+	that there are no active client threads once db_cleanup is called. This is important
+	because of this condition is not satisfied, memory gets corrupted. I make my listener thread
+	wait till the number of client threads, which I decrement when I remove clients, is 0. It is
+	only until then that my db_cleanup gets executed.
+	Fine-grained locking vs coarse-grained locking: I chose fine-grained in my db.c because coarse-grained
+	locking is highly efficient; it prevents all other threads from even observing data once a thread accesses
+	that data.
+
+	For a more detailed explanation of my design choices, please see my comments.
